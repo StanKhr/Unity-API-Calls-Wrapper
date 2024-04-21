@@ -1,5 +1,6 @@
 ﻿using System;
 using Demo;
+using Demo.User;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using RestApi;
 using UnityEngine;
 
-namespace Demo
+namespace Demo.User
 {
     public class ApiDemoUser : MonoBehaviour
     {

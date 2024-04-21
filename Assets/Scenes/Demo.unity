@@ -398,8 +398,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _getUri: https://catfact.ninja/fact
   _postUri: https://reqres.in/api/users
-  _postFieldName: 
-  _postFieldValue: 
+  _postFieldName: test
+  _postFieldValue: xd
 --- !u!4 &509523253
 Transform:
   m_ObjectHideFlags: 0
