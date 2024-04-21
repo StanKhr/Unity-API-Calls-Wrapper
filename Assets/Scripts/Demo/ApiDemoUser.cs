@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using RestApi;
 using UnityEngine;
 
@@ -14,7 +15,12 @@ namespace Demo
         
         #region Editor Fields
 
-        [SerializeField] private string _url;
+        [SerializeField] private string _getUrl;
+        [SerializeField] private string _postUrl;
+
+        [Header("POST Fields")]
+        [SerializeField] private string _postFieldName;
+        [SerializeField] private string _postFieldValue;
 
         #endregion
 
@@ -22,7 +28,7 @@ namespace Demo
 
         private void OnDestroy()
         {
-            ApiCallsWrapper.CancelCalls();
+            ApiCallsWrapperUniTask.CancelCalls();
         }
 
         #endregion
@@ -31,14 +37,14 @@ namespace Demo
 
         public void Get()
         {
-            if (string.IsNullOrEmpty(_url))
+            if (!ValidateUrl(_getUrl))
             {
-                OnResultMessage?.Invoke("URL is null or empty.");
                 return;
             }
             
-            ApiCallsWrapper.Get(
-                _url, 
+            ApiCallsWrapperUniTask.CancelCalls();
+            ApiCallsWrapperUniTask.Get(
+                _getUrl, 
                 json => OnResultMessage?.Invoke(json),
                 errorMessage => OnResultMessage?.Invoke(errorMessage)
             );
@@ -46,7 +52,34 @@ namespace Demo
 
         public void Post()
         {
+            if (!ValidateUrl(_postUrl))
+            {
+                return;
+            }
+
+            var fields = new Dictionary<string, string>()
+            {
+                {_postFieldName, _postFieldValue}
+            };
             
+            ApiCallsWrapperUniTask.CancelCalls();
+            ApiCallsWrapperUniTask.Post(
+                _postUrl,
+                fields,
+                json => OnResultMessage?.Invoke(json),
+                errorMessage => OnResultMessage?.Invoke(errorMessage)
+            );
+        }
+
+        private bool ValidateUrl(string url)
+        {
+            var invalidUrl = string.IsNullOrEmpty(url);
+            if (invalidUrl)
+            {
+                OnResultMessage?.Invoke("URL is null or empty.");
+            }
+            
+            return !invalidUrl;
         }
 
         #endregion

@@ -396,7 +396,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4abb3e2c5a44498b9e486b59ba89d83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _url: https://catfact.ninja/fact
+  _getUrl: https://catfact.ninja/fact
+  _postUrl: https://reqres.in/api/users
+  _postFieldName: 
+  _postFieldValue: 
 --- !u!4 &509523253
 Transform:
   m_ObjectHideFlags: 0
