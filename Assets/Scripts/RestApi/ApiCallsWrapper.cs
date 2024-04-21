@@ -7,9 +7,17 @@ namespace RestApi
 {
     public static class ApiCallsWrapper
     {
+        #region Fields
+
+        private static string[] _cachedResultNames;
+
+        #endregion
+        
         #region Properties
 
         private static CancellationTokenSource CancellationTokenSource { get; set; }
+        private static string[] CachedResultNames =>
+            _cachedResultNames ??= Enum.GetNames(typeof(UnityWebRequest.Result));
 
         #endregion
         
@@ -47,8 +55,7 @@ namespace RestApi
                 return;
             }
 
-            var resultName = Enum.GetNames(typeof(UnityWebRequest.Result));
-            errorCallback?.Invoke(resultName[(int)request.result]);
+            errorCallback?.Invoke(CachedResultNames[(int)request.result]);
         }
 
         #endregion
