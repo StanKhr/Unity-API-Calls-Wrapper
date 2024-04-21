@@ -55,8 +55,8 @@ namespace RestApi
             {
                 form.AddField(key, fields[key]);
             }
-            
-            using var request = UnityWebRequest.PostWwwForm(uri, form.ToString());
+
+            using var request = UnityWebRequest.Post(uri, form);
 
             request.SendWebRequest();
 

@@ -15,12 +15,18 @@ namespace Demo
         
         #region Editor Fields
 
-        [SerializeField] private string _getUrl;
-        [SerializeField] private string _postUrl;
+        [SerializeField] private string _getUri;
+        [SerializeField] private string _postUri;
 
         [Header("POST Fields")]
         [SerializeField] private string _postFieldName;
         [SerializeField] private string _postFieldValue;
+
+        #endregion
+
+        #region Fields
+
+        private static readonly Dictionary<string, string> CachedPostFieldsDictionary = new();
 
         #endregion
 
@@ -37,14 +43,14 @@ namespace Demo
 
         public void Get()
         {
-            if (!ValidateUrl(_getUrl))
+            if (!ValidateUrl(_getUri))
             {
                 return;
             }
             
             ApiCallsWrapperUniTask.CancelCalls();
             ApiCallsWrapperUniTask.Get(
-                _getUrl, 
+                _getUri, 
                 json => OnResultMessage?.Invoke(json),
                 errorMessage => OnResultMessage?.Invoke(errorMessage)
             );
@@ -52,20 +58,18 @@ namespace Demo
 
         public void Post()
         {
-            if (!ValidateUrl(_postUrl))
+            if (!ValidateUrl(_postUri))
             {
                 return;
             }
 
-            var fields = new Dictionary<string, string>()
-            {
-                {_postFieldName, _postFieldValue}
-            };
+            CachedPostFieldsDictionary.Clear();
+            CachedPostFieldsDictionary.Add(_postFieldName, _postFieldValue);
             
             ApiCallsWrapperUniTask.CancelCalls();
             ApiCallsWrapperUniTask.Post(
-                _postUrl,
-                fields,
+                _postUri,
+                CachedPostFieldsDictionary,
                 json => OnResultMessage?.Invoke(json),
                 errorMessage => OnResultMessage?.Invoke(errorMessage)
             );
