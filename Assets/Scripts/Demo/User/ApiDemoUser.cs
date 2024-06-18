@@ -34,7 +34,7 @@ namespace Demo.User
 
         private void OnDestroy()
         {
-            ApiCallsWrapperUniTask.CancelCalls();
+            ApiCallsWrapper.CancelCalls();
         }
 
         #endregion
@@ -48,8 +48,8 @@ namespace Demo.User
                 return;
             }
             
-            ApiCallsWrapperUniTask.CancelCalls();
-            ApiCallsWrapperUniTask.Get(
+            ApiCallsWrapper.CancelCalls();
+            ApiCallsWrapper.Get(
                 _getUri, 
                 json => OnResultMessage?.Invoke(json),
                 errorMessage => OnResultMessage?.Invoke(errorMessage)
@@ -66,8 +66,8 @@ namespace Demo.User
             CachedPostFieldsDictionary.Clear();
             CachedPostFieldsDictionary.Add(_postFieldName, _postFieldValue);
             
-            ApiCallsWrapperUniTask.CancelCalls();
-            ApiCallsWrapperUniTask.Post(
+            ApiCallsWrapper.CancelCalls();
+            ApiCallsWrapper.Post(
                 _postUri,
                 CachedPostFieldsDictionary,
                 json => OnResultMessage?.Invoke(json),

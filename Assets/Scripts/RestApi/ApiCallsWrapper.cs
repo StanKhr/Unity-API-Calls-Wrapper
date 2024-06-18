@@ -2,13 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
 
 namespace RestApi
 {
-    public static class ApiCallsWrapperUniTask
+    public static class ApiCallsWrapper
     {
         #region Fields
 
@@ -79,9 +78,8 @@ namespace RestApi
 
             while (!request.isDone)
             {
-                var isCancelled = await UniTask.Yield(cancellationToken: CancellationTokenSource.Token)
-                    .SuppressCancellationThrow();
-                if (!isCancelled)
+                await Task.Yield();
+                if (!CancellationTokenSource.Token.IsCancellationRequested)
                 {
                     continue;
                 }
